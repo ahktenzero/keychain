@@ -9,7 +9,8 @@ S<--extended --gpg2 --help --ignore-missing --list --noask --nocolor --nogui>
 S<--noinherit --nolock --quick --quiet --ssh-allow-forwarded --ssh-allow-gpg>
 S<--ssh-rm --ssh-spawn-gpg --systemd --version ] [ --ssh-agent-socket I<path> ]>
 S<[ --dir I<dirname> ] [ --host I<name> ] [ --lockwait I<seconds> ]>
-S<[ --stop I<which> ] [ --timeout I<minutes> ] [ --wipe I<which> ] [ keys... ]>
+S<[ --stop I<which> ] [ --timeout I<minutes> ] [ --wipe I<which> ]
+S<[ --force-pidfile ] [ keys... ]>
 
 =head1 INTRODUCTION
 
@@ -278,7 +279,7 @@ valid C<SSH_AGENT_PID> also defined in the environment and is also determined to
 be the socket of any running gpg-agent -- then this agent will simply be used, B<but not persisted> in any
 B<pidfile>. This is because this SSH-supplied
 socket will disappear when the underlying SSH connection terminates, and thus
-it cannot be relied on to be available persistently.
+it cannot be relied on to be available persistently. This can be overridden by the B<--force-pidfile> option.
 
 =back
 

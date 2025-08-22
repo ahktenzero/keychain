@@ -57,6 +57,7 @@ gpg_started=false
 ssh_allow_forwarded=false
 ssh_allow_gpg=false
 ssh_spawn_gpg=false
+force_pidfile=false
 debugopt=false
 CYAN="[36;01m"
 CYANN="[36m"
@@ -414,7 +415,7 @@ startagent_ssh() {
 		debug "pidfile is valid" && unset SSH_AGENT_PID SSH_AUTH_SOCK && eval "$(catpidf_shell sh)"
 	elif $allow_inherited && ssh_envcheck env; then
 		# If our env is OK, then let's grab it for our pidfile, as long as we don't have a forwarded ssh connection:
-		if [ "$SSH_AGENT_PID" != forwarded ]; then
+		if [ "$SSH_AGENT_PID" != forwarded ] || [ $force_pidfile ]; then
 			pidfile_out="SSH_AUTH_SOCK=\"$SSH_AUTH_SOCK\"; export SSH_AUTH_SOCK"
 			if [ -n "$SSH_AGENT_PID" ]; then
 				pidfile_out="$pidfile_out
@@ -808,6 +809,7 @@ while [ -n "$1" ]; do
 		--systemd) systemdopt=true ;;
 		--version|-V) setaction version ;;
 		--attempts) warn "--attempts is now deprecated." ;;
+		--force-pidfile) force_pidfile=true ;;
 		--clear)
 			clearopt=true
 			$quickopt && die "--quick and --clear are not compatible"
